@@ -15,12 +15,13 @@ public class EchoClient {
 
   private void start() {
     try (Socket socket = new Socket(host, port)) {
-      Scanner scanner = new Scanner(System.in);
-      String message = scanner.next();
-      System.out.println("your input message is: " + message);
-      BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-      PrintWriter writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
       while (true) {
+        Scanner scanner = new Scanner(System.in);
+        String message = scanner.next();
+        System.out.println("your input message is: " + message);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        PrintWriter writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+
         writer.println(message);
         writer.flush();
         String receivedMessage = reader.readLine();

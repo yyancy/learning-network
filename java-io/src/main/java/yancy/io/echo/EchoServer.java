@@ -25,15 +25,28 @@ public class EchoServer {
       logger.info("server is running. port={}", port);
       while (true) {
         Socket clientSock = serverSocket.accept();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(clientSock.getInputStream()));
-        PrintWriter writer = new PrintWriter(new OutputStreamWriter(clientSock.getOutputStream()));
-        String req = reader.readLine();
-        System.out.printf("received message: %s\n", req);
-        writer.println(req);
-        writer.flush();
+        new Thread(()->{
+          try {
+            handle(clientSock);
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        }).start();
       }
     } catch (IOException e) {
       logger.error(e.getMessage(), e);
+    }
+  }
+
+
+  private void handle(Socket clientSock) throws IOException {
+    while (true) {
+      BufferedReader reader = new BufferedReader(new InputStreamReader(clientSock.getInputStream()));
+      PrintWriter writer = new PrintWriter(new OutputStreamWriter(clientSock.getOutputStream()));
+      String req = reader.readLine();
+      System.out.printf("received message: %s\n", req);
+      writer.println(req);
+      writer.flush();
     }
   }
 
