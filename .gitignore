@@ -1,0 +1,8 @@
+/target/
+/.settings/
+/.idea/
+/out/
+*.iml
+.factorypath
+src/test/java/io/renren/StringTest.java
+src/test/java/io/renren/aaa.java
