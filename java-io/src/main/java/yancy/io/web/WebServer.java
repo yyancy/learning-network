@@ -7,6 +7,7 @@ import yancy.io.echo.EchoServer;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Date;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -77,12 +78,12 @@ public class WebServer {
 
   private void unSupportMethod(BufferedReader reader, PrintWriter writer) {
     writer.print("HTTP/1.1 405\r\n");
-    String resp = "{\"message\":\"not support,开心 (*^▽^*)\"}";
+    String resp = "{\"message\":\"not support,开心233 (*^▽^*)\"}";
 
-    writer.print("Content-Type: text/html;charset=UTF-8\r\n");
+    writer.print("Content-Type: text/json;charset=UTF-8\r\n");
 //    writer.print("Content-Length: " + (resp.getBytes().length) + "\r\n");
     writer.print("\r\n");
-    writer.print(resp);
+    writer.print(new Date().toString());
     writer.flush();
   }
 
