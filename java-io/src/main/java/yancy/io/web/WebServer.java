@@ -11,6 +11,10 @@ import java.util.Date;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * 一个能解析http请求的web服务器.
+ * 使用一个连接一个线程模型
+ */
 public class WebServer {
 
   private final Logger logger = LoggerFactory.getLogger(EchoServer.class);
@@ -20,7 +24,6 @@ public class WebServer {
 
   public WebServer(int port) {
     this.port = port;
-
   }
 
   public void start() {
