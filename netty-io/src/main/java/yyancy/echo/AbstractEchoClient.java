@@ -33,6 +33,7 @@ public abstract class AbstractEchoClient {
       Bootstrap b = new Bootstrap();
       b.group(group)
           .channel(NioSocketChannel.class)
+          .option(ChannelOption.TCP_NODELAY, true)
           .remoteAddress(new InetSocketAddress(host, port))
           .handler(new ChannelInitializer<SocketChannel>() {
 
@@ -47,7 +48,8 @@ public abstract class AbstractEchoClient {
       ChannelFuture f = b.connect().sync();
       Channel channel = f.channel();
       handlerChannel(this, channel);
-
+      System.out.println("close client...");
+//      f.channel().closeFuture().sync();
     } finally {
       group.shutdownGracefully().sync();
     }

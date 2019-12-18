@@ -1,18 +1,15 @@
 package yyancy.echo;
 
-import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.*;
 import io.netty.handler.codec.LineBasedFrameDecoder;
+import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import io.netty.util.CharsetUtil;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author dongyang
@@ -27,14 +24,19 @@ public class StickyBagClient extends AbstractEchoClient {
   public void handlerChannel(AbstractEchoClient context, Channel channel) {
 
     for (int i = 0; i < 100; i++) {
-      channel.writeAndFlush(Unpooled.copiedBuffer("I am your master.", CharsetUtil.UTF_8));
+      channel.writeAndFlush(Unpooled.copiedBuffer("I am your master.\r\n", CharsetUtil.UTF_8));
+    }
+    try {
+      TimeUnit.SECONDS.sleep(10);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
     }
 
   }
 
 
   @ChannelHandler.Sharable
-  public static class EchoClientHandler extends SimpleChannelInboundHandler<String> {
+  public static class EchoClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
       System.out.println("connection()");
@@ -56,8 +58,7 @@ public class StickyBagClient extends AbstractEchoClient {
 
 
     @Override
-    public void channelRead0(ChannelHandlerContext ctx, String body) {
-      System.out.println("233");
+    public void channelRead(ChannelHandlerContext ctx, Object body) {
 //      String body = new String(req, StandardCharsets.UTF_8);
       System.out.println("client received: " + body);
     }
@@ -76,8 +77,8 @@ public class StickyBagClient extends AbstractEchoClient {
     final String host = "127.0.0.1";
     final int port = Integer.parseInt("8888");
     List<ChannelHandler> handlers = new ArrayList<>();
-    handlers.add(new LineBasedFrameDecoder(1024));
-    handlers.add(new StringEncoder());
+    handlers.add(new LineBasedFrameDecoder(8096));
+    handlers.add(new StringDecoder());
     handlers.add(new EchoClientHandler());
 
     new StickyBagClient(host, port, handlers).start();
