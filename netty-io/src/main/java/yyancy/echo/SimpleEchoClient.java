@@ -14,11 +14,13 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
+ * 简单的一个echo客户端示例
+ *
  * @author dongyang
  * @date 2019-12-13 17:44
  */
-public class DefaultEchoClient extends AbstractEchoClient {
-  public DefaultEchoClient(String host, int port, List<ChannelHandler> handlers) {
+public class SimpleEchoClient extends AbstractEchoClient {
+  public SimpleEchoClient(String host, int port, List<ChannelHandler> handlers) {
     super(host, port, handlers);
   }
 
@@ -40,7 +42,7 @@ public class DefaultEchoClient extends AbstractEchoClient {
   public static class EchoClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
-      System.out.println("connection()");
+      System.out.println("success connection.");
 ////      while (true) {
 //      System.out.println("输入q/Q退出:");
 //      Scanner scanner = new Scanner(System.in);
@@ -81,7 +83,7 @@ public class DefaultEchoClient extends AbstractEchoClient {
     final String host = "127.0.0.1";
     final int port = Integer.parseInt("8888");
 
-    new DefaultEchoClient(host, port, Collections.singletonList(new EchoClientHandler())).start();
+    new SimpleEchoClient(host, port, Collections.singletonList(new EchoClientHandler())).start();
   }
 
 }

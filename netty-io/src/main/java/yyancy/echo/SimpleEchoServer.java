@@ -13,13 +13,15 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * 简单的echo服务器示例
+ *
  * @author dongyang
  * @date 2019-12-17 12:55
  */
-public class DefaultEchoServer extends AbstractEchoServer {
+public class SimpleEchoServer extends AbstractEchoServer {
 
 
-  public DefaultEchoServer(int port, List<ChannelHandler> handlers) {
+  public SimpleEchoServer(int port, List<ChannelHandler> handlers) {
     super(port, handlers);
   }
 
@@ -72,6 +74,6 @@ public class DefaultEchoServer extends AbstractEchoServer {
     String _port = "8888";
     int port = Integer.parseInt(_port);
 
-    new DefaultEchoServer(port, Collections.singletonList(new EchoServerHandler())).start();
+    new SimpleEchoServer(port, Collections.singletonList(new EchoServerHandler())).start();
   }
 }

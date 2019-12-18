@@ -1,10 +1,12 @@
 package yyancy.echo;
 
 import io.netty.buffer.Unpooled;
-import io.netty.channel.*;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.LineBasedFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
 import io.netty.util.CharsetUtil;
 
 import java.util.ArrayList;
@@ -12,6 +14,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * tcp粘包/粘包解决示例
+ *
  * @author dongyang
  * @date 2019-12-13 17:49
  */

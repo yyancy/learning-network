@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * tcp粘包/粘包解决示例
+ *
  * @author dongyang
  * @date 2019-12-17 12:55
  */
